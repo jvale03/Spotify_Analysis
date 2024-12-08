@@ -6,3 +6,8 @@ Here are the steps if you want to create your own Wrapped:
 
 ## Automate Songs Storing
 
+
+## Final Output
+At least for now...
+
+![image](ReadmeImgs/image.png)

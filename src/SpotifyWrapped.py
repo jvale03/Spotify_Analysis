@@ -24,6 +24,11 @@ if __name__=="__main__":
     pandas_url = convert_google_sheet_url(WRAP)
     # read csv
     df = pd.read_csv(pandas_url)
+    # add Date info
+    df['month'] = pd.to_datetime(df['PlayedAt']).dt.strftime('%B')
+    df['month_day'] = pd.to_datetime(df['PlayedAt']).dt.strftime('%B %d') 
+
+    
 
     # get artist info
     artist_count = df["ArtistName"].value_counts()
@@ -32,6 +37,12 @@ if __name__=="__main__":
     # get tracks info
     track_count = df["TrackName"].value_counts()
     top_10_tracks = track_count.head(10)
+
+    # get month info
+    month_count = df["month"].value_counts()
+
+    # get day info
+    day_count = df["month_day"].value_counts()
 
 
     with open("data.json", "w") as f:
@@ -42,6 +53,8 @@ if __name__=="__main__":
             "total_minutes": df.shape[0] * 3,
             "total_artists": len(artist_count),
             "total_different_tracks": len(track_count),
+            "top_month": month_count.head(1).to_dict(),
+            "top_day": day_count.head(1).to_dict(),
         }, f)
 
 

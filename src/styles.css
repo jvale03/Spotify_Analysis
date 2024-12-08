@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #22c75c;
+    background: linear-gradient(135deg, #16f163 20%, #019029 100%);
     color: black;
     margin: 0;
     padding: 0;
@@ -24,9 +24,9 @@ header {
 }
 
 header .logo {
-    height: 40px;
+    height: 60px;
     width: auto;
-    margin-right: 20px;
+    margin-right: 0px;
 }
 
 header h1 {
@@ -104,40 +104,43 @@ canvas {
     height: 100%;
 }
 
-/* Estilo da tabela dentro de info-container */
-.info-container table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1.2em;
-    font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+
+#spotify-info {
+    display: flex-start;
+    justify-content: center;
+    align-items: center;
+    height: 35vh;
 }
 
-/* Cabeçalho da tabela */
-.info-container th {
-    background-color: #1DB954;
-    color: white;
-    padding: 12px 15px;
-    text-align: left;
-    border: 1px solid #ddd;
+.info-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: black;
+    color: #22c75c;
+    border-radius: 40px;
+    padding: 20px;
+    width: 350px;
+    height: 250px;
+    position: relative;
 }
 
-/* Linhas da tabela */
-.info-container td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    text-align: left;
+.spotify-logo {
+    position: absolute;
+    top: 5px;
+    left: 165px;
+    width: 60px;
+    height: 60px;
 }
 
-/* Estilo para linhas alternadas */
-.info-container tr:nth-child(even) {
-    background-color: #f4f4f4;
-}
-
-/* Hover para linhas */
-.info-container tr:hover {
-    background-color: #eaf7ed;
-    transition: background-color 0.3s ease;
+.info-text {
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight:bold;
+    margin-top: 15px;
+    position: relative;
+    top: 15px; 
+    padding-left: 25px;
 }

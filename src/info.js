@@ -1,55 +1,50 @@
-// Função para renderizar os dados como uma grelha
-function renderSpotifyInfoGrid(data, container) {
-    // Limpar o conteúdo anterior
+function renderSpotifyInfo(data, container) {
+    // Limpa o conteúdo do container
     container.innerHTML = '';
 
-    // Criar tabela estilizada
-    const table = document.createElement('table');
-    table.style.width = '100%';
-    table.style.borderCollapse = 'collapse';
-    table.style.margin = '20px 0';
-    table.style.fontSize = '1.2em';
-    table.style.textAlign = 'left';
+    // Cria o elemento principal da caixa
+    const infoBox = document.createElement('div');
+    infoBox.classList.add('info-box');
 
-    // Adicionar cabeçalho
-    const headerRow = document.createElement('tr');
-    headerRow.style.backgroundColor = '#f4f4f4';
-    headerRow.style.borderBottom = '2px solid #ddd';
+    // Adiciona o logo
+    const logo = document.createElement('img');
+    logo.src = 'Images/Logo.png'; // Caminho da imagem do logo
+    logo.alt = 'Spotify Logo';
+    logo.classList.add('spotify-logo');
+    infoBox.appendChild(logo);
 
-    const headers = ['Metric', 'Value'];
-    headers.forEach(headerText => {
-        const th = document.createElement('th');
-        th.textContent = headerText;
-        th.style.padding = '12px 15px';
-        th.style.border = '1px solid #ddd';
-        headerRow.appendChild(th);
-    });
+    // Cria os elementos de texto
+    const listenedTracks = document.createElement('p');
+    listenedTracks.textContent = `- ${data.total_different_tracks} different songs listened.`;
+    listenedTracks.classList.add('info-text');
 
-    table.appendChild(headerRow);
+    const totalListenedTracks = document.createElement('p');
+    totalListenedTracks.textContent = `- ${data.total_tracks} songs listened to in total.`;
+    totalListenedTracks.classList.add('info-text');
 
-    // Adicionar linhas de dados
-    Object.keys(data).forEach(key => {
-        const row = document.createElement('tr');
-        row.style.borderBottom = '1px solid #ddd';
+    const artistsNumber = document.createElement('p');
+    artistsNumber.textContent = `- ${data.total_artists} artists heard.`;
+    artistsNumber.classList.add('info-text');
 
-        const metricCell = document.createElement('td');
-        metricCell.textContent = key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
-        metricCell.style.padding = '12px 15px';
-        metricCell.style.border = '1px solid #ddd';
+    const bestMonth = document.createElement('p');
+    const [key_month, value_month] = Object.entries(data.top_month)[0];
+    bestMonth.textContent = `- Most listened month: ${key_month}, ${value_month} minutes.`;
+    bestMonth.classList.add('info-text');
 
-        const valueCell = document.createElement('td');
-        valueCell.textContent = data[key];
-        valueCell.style.padding = '12px 15px';
-        valueCell.style.border = '1px solid #ddd';
+    const bestDay = document.createElement('p');
+    const [key_day, value_day] = Object.entries(data.top_day)[0];
+    bestDay.textContent = `- Most listened day: ${key_day}, ${value_day} minutes.`;
+    bestDay.classList.add('info-text');
 
-        row.appendChild(metricCell);
-        row.appendChild(valueCell);
+    // Adiciona os elementos à caixa
+    infoBox.appendChild(artistsNumber);
+    infoBox.appendChild(listenedTracks);
+    infoBox.appendChild(totalListenedTracks);
+    infoBox.appendChild(bestMonth);
+    infoBox.appendChild(bestDay);
 
-        table.appendChild(row);
-    });
-
-    // Adicionar tabela ao container
-    container.appendChild(table);
+    // Adiciona a caixa ao container
+    container.appendChild(infoBox);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -61,32 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Exemplo de como buscar o JSON de um arquivo ou API (no caso de uma API externa)
-    fetch('spotify_data.json')  // Substitua pelo URL do seu JSON ou caminho do arquivo
+    fetch('data.json')  // Substitua pelo URL do seu JSON ou caminho do arquivo
         .then(response => response.json())  // Converte a resposta em JSON
         .then(data => {
             // Chama a função para renderizar os dados
-            renderSpotifyInfoGrid(data, container);
+            renderSpotifyInfo(data, container);
         })
         .catch(error => {
             console.error('Erro ao carregar o JSON:', error);
-        });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('spotify-info');
-
-    if (!container) {
-        console.error('Elemento com ID "spotify-info" não encontrado.');
-        return;
-    }
-
-    // Buscar o JSON automaticamente (substitua o caminho pela URL ou caminho correto do seu JSON)
-    fetch('data.json')  // Aqui substituís 'spotify_data.json' pelo caminho do teu arquivo JSON
-        .then(response => response.json())  // Converte a resposta para JSON
-        .then(data => {
-            renderSpotifyInfoGrid(data, container);  // Passa os dados para a função de renderização
-        })
-        .catch(error => {
-            console.error('Erro ao carregar os dados:', error);  // Erro no carregamento
         });
 });

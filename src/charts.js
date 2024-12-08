@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         // Atualizar o texto do resumo
-        document.getElementById("summary-text").textContent = `${data.total_tracks} músicas ouvidas, aproximadamente ${data.total_minutes} minutos!`;
+        document.getElementById("summary-text").textContent = `You listened to ${data.total_different_tracks} different songs, a total of ${data.total_minutes} minutes!`;
 
         const artists = Object.keys(data.top_artists);
         const artistCounts = Object.values(data.top_artists);
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Carregar imagens dos artistas e usar o nome se a imagem não estiver disponível
         const artistImages = await Promise.all(artists.map(async (artist) => {
-            const imagePath = `./../Images/${artist}.jpeg`;
+            const imagePath = `./Images/${artist}.jpeg`;
             const image = new Image();
             image.src = imagePath;
 
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             data: {
                 labels: artists,
                 datasets: [{
-                    label: "Nr de músicas ouvidas",
+                    label: "Nr of plays",
                     data: artistCounts,
                     backgroundColor: "Black",
                     borderColor: "#1DB954",
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 },
                 plugins: {
                     legend: { display: false },
-                    title: { display: true, text: "10 Artistas Mais Ouvidos", color: "Black", font: {
+                    title: { display: true, text: "10 Most listened artists", color: "Black", font: {
                         size: 16, 
                         weight: 'bold'
                     }}
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             data: {
                 labels: tracks,
                 datasets: [{
-                    label: "Nr de vezes ouvida",
+                    label: "Nr of plays",
                     data: trackCounts,
                     backgroundColor: "Black",
                     borderColor: "#1DB954",
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     legend: { display: false },
                     title: { 
                         display: true, 
-                        text: "10 Músicas Mais Ouvidas", 
+                        text: "10 Most listened tracks", 
                         color: "Black", 
                         font: {
                             size: 16, 
