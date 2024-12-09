@@ -69,7 +69,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        x: { ticks: { display: false } },
+                        x: { ticks: { display: false },
+                        grid: {
+                            drawBorder: false,
+                            drawOnChartArea: false
+                            }
+                        },
                         y: {
                             display: true,
                             ticks: {
