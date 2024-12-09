@@ -1,3 +1,5 @@
+
+
 document.addEventListener("DOMContentLoaded", async () => {
     try {
         // Fetch data from JSON file
@@ -11,8 +13,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             throw new Error("Estrutura de dados inválida");
         }
 
+        const text_color = "#e9e8e8";
+
         // Atualizar o texto do resumo
-        document.getElementById("summary-text").textContent = `You listened to ${data.total_different_tracks} different songs, a total of ${data.total_minutes} minutes!`;
+        const summaryText = `You listened to ${data.total_different_tracks} different songs, a total of ${data.total_minutes} minutes!`;
+        const summaryTextElement = document.getElementById("summary-text");
+        if (summaryTextElement) {
+            summaryTextElement.textContent = summaryText;
+        }
 
         const artists = Object.keys(data.top_artists);
         const artistCounts = Object.values(data.top_artists);
@@ -28,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 .replace(/[^\w\-]/g, "");
         }
 
-        // Carregar imagens dos artistas e usar o nome se a imagem não estiver disponível
+        // Carregar imagens dos artistas
         const artistImages = await Promise.all(artists.map(async (artist) => {
             const imagePath = `./Images/${artist}.jpeg`;
             const image = new Image();
@@ -36,160 +44,160 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             return new Promise((resolve) => {
                 image.onload = () => resolve({ artist, image });
-                image.onerror = () => resolve({ artist, image: null }); // Retorna null se a imagem não carregar
+                image.onerror = () => resolve({ artist, image: null });
             });
         }));
 
         console.log("Imagens dos artistas processadas:", artistImages);
 
-        // Criar gráfico dos artistas com imagens ou nomes no eixo x
-        const artistChart = new Chart(document.getElementById("topArtistsChart"), {
-            type: "bar",
-            data: {
-                labels: artists,
-                datasets: [{
-                    label: "Nr of plays",
-                    data: artistCounts,
-                    backgroundColor: "Black",
-                    borderColor: "#1DB954",
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        ticks: { display: false }, // Ocultar labels padrão do eixo x
-                        
-                    },
-
-                    y: {
-                        display: true,
-                        ticks: {
-                            color: "Black",
-                            callback: function(value) {
-                                return value; // Exibe todos os valores
+        // Criar gráfico dos artistas
+        const artistChartElement = document.getElementById("topArtistsChart");
+        
+        if (artistChartElement) {
+            new Chart(artistChartElement, {
+                type: "bar",
+                data: {
+                    labels: artists,
+                    datasets: [{
+                        label: "Nr of plays",
+                        data: artistCounts,
+                        backgroundColor: artistCounts.map(() => `rgba(30, 215, 96, 0.5)`),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { ticks: { display: false } },
+                        y: {
+                            display: true,
+                            ticks: {
+                                color: text_color,
+                                callback: function(value) {
+                                    return value;
+                                }
+                            },
+                            grid: {
+                                drawBorder: false,
+                                drawOnChartArea: false
                             }
-                        },
-                        grid: {
-                            drawBorder: false,
-                            drawOnChartArea: false,
                         }
-                    }
-                },
-                plugins: {
-                    legend: { display: false },
-                    title: { display: true, text: "10 Most listened artists", color: "Black", font: {
-                        size: 16, 
-                        weight: 'bold'
-                    }}
-                },
-                layout: {
-                    padding: {
-                        top: 10,
-                        right: 10,
-                        bottom: 80
-                    }
-                }
-            },
-            plugins: [{
-                id: "customXAxisImages",
-                afterDraw(chart) {
-                    const ctx = chart.ctx;
-                    const xAxis = chart.scales.x;
-                    const yAxisBottom = chart.scales.y.bottom;
-
-                    const tickWidth = xAxis.width / xAxis.ticks.length;
-                    const dynamicImageSize = Math.min(tickWidth * 0.75, 50);
-
-                    xAxis.ticks.forEach((tick, index) => {
-                        const label = artists[index];
-                        const artistData = artistImages[index];
-                        const xPos = xAxis.getPixelForTick(index);
-                        const yPos = yAxisBottom + 10;
-
-                        if (artistData.image) {
-                            // Desenhar imagem
-                            ctx.drawImage(
-                                artistData.image,
-                                xPos - dynamicImageSize / 2,
-                                yPos,
-                                dynamicImageSize,
-                                dynamicImageSize
-                            );
-                        } else {
-                            // Exibir nome do artista
-                            ctx.font = "12px Arial";
-                            ctx.fillStyle = "Black";
-                            ctx.textAlign = "center";
-                            ctx.fillText(
-                                label,
-                                xPos,
-                                yPos + dynamicImageSize / 2
-                            );
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: "10 Most listened artists",
+                            color: text_color,
+                            font: { size: 16, weight: 'bold' },
+                            family: "'Metropolis Semi', Arial, sans-serif"
                         }
-                    });
-                }
-            }]
-        });
+                    },
+                    layout: { padding: { top: 10, right: 10, bottom: 80 } }
+                },
+                plugins: [{
+                    id: "customXAxisImages",
+                    afterDraw(chart) {
+                        const ctx = chart.ctx;
+                        const xAxis = chart.scales.x;
+                        const yAxisBottom = chart.scales.y.bottom;
+
+                        const tickWidth = xAxis.width / xAxis.ticks.length;
+                        const dynamicImageSize = Math.min(tickWidth * 0.75, 50);
+
+                        xAxis.ticks.forEach((tick, index) => {
+                            const label = artists[index];
+                            const artistData = artistImages[index];
+                            const xPos = xAxis.getPixelForTick(index);
+                            const yPos = yAxisBottom + 10;
+
+                            if (artistData.image) {
+                                // Desenhar imagem
+                                ctx.drawImage(
+                                    artistData.image,
+                                    xPos - dynamicImageSize / 2,
+                                    yPos,
+                                    dynamicImageSize,
+                                    dynamicImageSize
+                                );
+                            } else {
+                                // Exibir nome do artista
+                                ctx.font = "12px Arial";
+                                ctx.fillStyle = text_color;
+                                ctx.textAlign = "center";
+                                ctx.fillText(
+                                    label,
+                                    xPos,
+                                    yPos + dynamicImageSize / 2
+                                );
+                            }
+                        });
+                    }
+                }]
+            });
+        }
 
         // Criar gráfico das músicas
-        new Chart(document.getElementById("topTracksChart"), {
-            type: "bar",
-            data: {
-                labels: tracks,
-                datasets: [{
-                    label: "Nr of plays",
-                    data: trackCounts,
-                    backgroundColor: "Black",
-                    borderColor: "#1DB954",
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        ticks: {
-                            color: "Black",
-                            font: {
-                                size: 12
+        const trackChartElement = document.getElementById("topTracksChart");
+        if (trackChartElement) {
+            new Chart(trackChartElement, {
+                type: "bar",
+                data: {
+                    labels: tracks,
+                    datasets: [{
+                        label: "Nr of plays",
+                        data: trackCounts,
+                        backgroundColor: artistCounts.map(() => `rgba(30, 215, 96, 0.5)`),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: text_color,
+                                font: { size: 12 },
+                                callback: function(value, index) {
+                                    var label = tracks[index];
+                                    return label.length > 8 ? label.substring(0, 8) + '...' : label;
+                                }
                             },
-                            callback: function(value, index) {
-                                var label = tracks[index];
-                                return label.length > 8 ? label.substring(0, 8) + '...' : label;
-                            }
+                            grid: {
+                                drawBorder: false,
+                                drawOnChartArea: false
+                            },
+                            position: "bottom"
+                        },
+                        y: {
+                            ticks: {
+                                color: text_color,
+                                callback: function(value) {
+                                    return trackCounts.includes(value) ? value : '';
+                                }
+                            },
+                            grid: {
+                                drawBorder: false,
+                                drawOnChartArea: false
+                            },
+                            position: "bottom"
                         }
                     },
-                    y: {
-                        ticks: {
-                            color: "Black",
-                            callback: function(value) {
-                                return trackCounts.includes(value) ? value : '';
-                            }
-                        },
-                        grid: {
-                            drawBorder: false,
-                            drawOnChartArea: false,
-                        }
-                    }
-                },
-                plugins: {
-                    legend: { display: false },
-                    title: { 
-                        display: true, 
-                        text: "10 Most listened tracks", 
-                        color: "Black", 
-                        font: {
-                            size: 16, 
-                            weight: 'bold'
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: "10 Most listened tracks",
+                            color: text_color,
+                            font: { size: 16, weight: 'bold' }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
+
     } catch (error) {
         console.error("Erro ao carregar os dados JSON:", error);
     }

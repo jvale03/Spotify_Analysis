@@ -1,6 +1,17 @@
+@font-face {
+    font-family: 'Metropolis Semi';
+    src: url('fonts/Metropolis-SemiBold.woff2') format('woff2'),
+        url('fonts/Metropolis-SemiBold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    font-weight: bolder;
+}
+
+
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #16f163 20%, #019029 100%);
+    font-family: 'Metropolis Semi', Arial, sans-serif;
+    background: linear-gradient(0deg, #282828 1%, rgb(113, 117, 114) 190%);
     color: black;
     margin: 0;
     padding: 0;
@@ -10,7 +21,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #121212;
+    background: linear-gradient(0deg, #303030 1%, rgb(12, 12, 12) 190%);
     padding: 1rem;
     font-size: 1.5rem;
     font-weight: bold;
@@ -32,7 +43,7 @@ header .logo {
 header h1 {
     margin: 0;
     font-size: 1.5rem;
-    color: #22c75c;
+    color: rgba(30, 215, 96, 0.6);
     text-align: center;
 }
 
@@ -47,7 +58,7 @@ header h1 {
     margin-bottom: 20px;
     font-size: 20px;
     font-weight:bold;
-    color: black;
+    color: rgb(233, 232, 232);
     text-align: center;
 }
 
@@ -57,6 +68,18 @@ header h1 {
     gap: 30px; /* Espaçamento entre os gráficos */
     justify-items: center; /* Centraliza os gráficos na célula */
     padding: 20px;
+}
+
+/* Duas colunas para janelas grandes */
+@media (max-width: 650px) {
+    .chart-container {
+        height: 4dvb;  /* Reduz a altura dos gráficos em telas pequenas */
+        width: 350px;
+    }
+    .info-box {
+        width: 200px;
+        height: 200px;
+    }
 }
 
 /* Duas colunas para janelas grandes */
@@ -77,12 +100,12 @@ header h1 {
     }
     .chart-container {
         height: 400px;  /* Reduz a altura dos gráficos em telas pequenas */
-        width: 600px;
+        width: 550px;
     }
 }
 
 /* Uma única coluna para janelas pequenas */
-@media (max-width: 849px) {
+@media (min-width: 650px) and (max-width: 849px)  {
     .charts {
         grid-template-columns: 1fr; /* Uma única coluna */
     }
@@ -94,7 +117,7 @@ header h1 {
 
 /* Container dos gráficos */
 .chart-container {
-    max-width: 550px;   /* Limita a largura máxima do gráfico */
+    max-width: 600px;   /* Limita a largura máxima do gráfico */
     height: 300px;      /* Altura fixa para manter a proporção */
 }
 
@@ -118,8 +141,8 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    background-color: black;
-    color: #22c75c;
+    background: linear-gradient(0deg, #434343 1%, rgb(162, 165, 162) 190%);;
+    color: #e9e8e8;
     border-radius: 40px;
     padding: 20px;
     width: 350px;
@@ -143,4 +166,25 @@ canvas {
     position: relative;
     top: 15px; 
     padding-left: 25px;
+}
+
+/* Duas colunas para janelas grandes */
+@media (max-width: 650px) {
+    .info-box {
+        width: 250px;
+        height: 200px;
+    }
+    .info-text {
+        font-size: 14px;
+        font-weight:bold;
+        margin-top: 10px;
+        position: relative;
+        top: 15px; 
+        padding-left: 25px;
+    }
+    .spotify-logo {
+        left: 120px;
+        height: 50px;
+        width: 50px;
+    }
 }

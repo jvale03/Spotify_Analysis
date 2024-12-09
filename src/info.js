@@ -1,3 +1,12 @@
+// Função para criar elementos de texto
+function createTextElement(textContent) {
+    const p = document.createElement('p');
+    p.textContent = textContent;
+    p.classList.add('info-text');
+    return p;
+}
+
+// Função principal para renderizar as informações do Spotify
 function renderSpotifyInfo(data, container) {
     // Limpa o conteúdo do container
     container.innerHTML = '';
@@ -13,41 +22,32 @@ function renderSpotifyInfo(data, container) {
     logo.classList.add('spotify-logo');
     infoBox.appendChild(logo);
 
-    // Cria os elementos de texto
-    const listenedTracks = document.createElement('p');
-    listenedTracks.textContent = `- ${data.total_different_tracks} different songs listened.`;
-    listenedTracks.classList.add('info-text');
+    // Cria e adiciona os elementos de texto
+    const listenedTracks = createTextElement(`- ${data.total_different_tracks} different songs listened.`);
+    const totalListenedTracks = createTextElement(`- ${data.total_tracks} songs listened to in total.`);
+    const artistsNumber = createTextElement(`- ${data.total_artists} artists heard.`);
+    
+    const [bestMonthKey, bestMonthValue] = Object.entries(data.top_month)[0];
+    const bestMonth = createTextElement(`- Most listened month: ${bestMonthKey}, ${bestMonthValue * 3} minutes.`);
 
-    const totalListenedTracks = document.createElement('p');
-    totalListenedTracks.textContent = `- ${data.total_tracks} songs listened to in total.`;
-    totalListenedTracks.classList.add('info-text');
+    const [bestDayKey, bestDayValue] = Object.entries(data.top_day)[0];
+    const bestDay = createTextElement(`- Most listened day: ${bestDayKey}, ${bestDayValue * 3} minutes.`);
 
-    const artistsNumber = document.createElement('p');
-    artistsNumber.textContent = `- ${data.total_artists} artists heard.`;
-    artistsNumber.classList.add('info-text');
-
-    const bestMonth = document.createElement('p');
-    const [key_month, value_month] = Object.entries(data.top_month)[0];
-    bestMonth.textContent = `- Most listened month: ${key_month}, ${value_month} minutes.`;
-    bestMonth.classList.add('info-text');
-
-    const bestDay = document.createElement('p');
-    const [key_day, value_day] = Object.entries(data.top_day)[0];
-    bestDay.textContent = `- Most listened day: ${key_day}, ${value_day} minutes.`;
-    bestDay.classList.add('info-text');
-
-    // Adiciona os elementos à caixa
-    infoBox.appendChild(artistsNumber);
-    infoBox.appendChild(listenedTracks);
-    infoBox.appendChild(totalListenedTracks);
-    infoBox.appendChild(bestMonth);
-    infoBox.appendChild(bestDay);
+    // Adiciona todos os elementos à caixa
+    infoBox.append(
+        artistsNumber,
+        listenedTracks,
+        totalListenedTracks,
+        bestMonth,
+        bestDay
+    );
 
     // Adiciona a caixa ao container
     container.appendChild(infoBox);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+// Função para buscar e processar os dados
+function fetchSpotifyData() {
     const container = document.getElementById('spotify-info');
 
     if (!container) {
@@ -55,14 +55,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Exemplo de como buscar o JSON de um arquivo ou API (no caso de uma API externa)
+    // Exemplo de como buscar o JSON de um arquivo ou API
     fetch('data.json')  // Substitua pelo URL do seu JSON ou caminho do arquivo
         .then(response => response.json())  // Converte a resposta em JSON
         .then(data => {
-            // Chama a função para renderizar os dados
-            renderSpotifyInfo(data, container);
+            renderSpotifyInfo(data, container);  // Chama a função para renderizar os dados
         })
         .catch(error => {
             console.error('Erro ao carregar o JSON:', error);
         });
-});
+}
+
+// Executa a função quando o DOM estiver completamente carregado
+document.addEventListener('DOMContentLoaded', fetchSpotifyData);
