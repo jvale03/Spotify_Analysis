@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         const artistCounts = Object.values(data.top_artists);
         const tracks = Object.keys(data.top_tracks);
         const trackCounts = Object.values(data.top_tracks);
+        const hours = Object.keys(data.hour_dist);
+        const hoursPercentage = Object.values(data.hour_dist);
 
         // Função para sanitizar os nomes dos arquivos
         function sanitize_name(name) {
@@ -153,7 +155,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     datasets: [{
                         label: "Nr of plays",
                         data: trackCounts,
-                        backgroundColor: artistCounts.map(() => `rgba(30, 215, 96, 0.5)`),
+                        backgroundColor: trackCounts.map(() => `rgba(30, 215, 96, 0.5)`),
                         borderWidth: 1
                     }]
                 },
@@ -202,6 +204,66 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             });
         }
+
+    // Criar gráfico das músicas
+    const hourChartElement = document.getElementById("hourDistChart");
+    if (hourChartElement) {
+        new Chart(hourChartElement, {
+            type: "bar",
+            data: {
+                labels: hours,
+                datasets: [{
+                    label: "listen percentage",
+                    data: hoursPercentage,
+                    backgroundColor: hoursPercentage.map(() => `rgba(30, 215, 96, 0.5)`),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        ticks: {
+                            color: text_color,
+                            font: { size: 12 },
+                            callback: function(value, index) {
+                                var label = hours[index];
+                                return label.length > 8 ? label.substring(0, 8) + '...' : label;
+                            }
+                        },
+                        grid: {
+                            drawBorder: false,
+                            drawOnChartArea: false
+                        },
+                        position: "bottom"
+                    },
+                    y: {
+                        ticks: {
+                            color: text_color,
+                            callback: function(value) {
+                                return trackCounts.includes(value) ? value : '';
+                            }
+                        },
+                        grid: {
+                            drawBorder: false,
+                            drawOnChartArea: false
+                        },
+                        position: "bottom"
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: "Hour distribution along day",
+                        color: text_color,
+                        font: { size: 16, weight: 'bold' }
+                    }
+                }
+            }
+        });
+    }
 
     } catch (error) {
         console.error("Erro ao carregar os dados JSON:", error);

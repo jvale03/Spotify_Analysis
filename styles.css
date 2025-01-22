@@ -5,9 +5,7 @@
     font-weight: 700;
     font-style: normal;
     font-display: swap;
-    font-weight: bolder;
 }
-
 
 body {
     font-family: 'Metropolis Semi', Arial, sans-serif;
@@ -15,9 +13,10 @@ body {
     color: black;
     margin: 0;
     padding: 0;
-    min-height: 100vh; /* Faz com que o conteúdo preencha a tela */
+    overflow: hidden; /* Evita barra cinza */
+    height: 100vh;
     display: flex;
-    flex-direction: column; /* Garante que os elementos no body fiquem empilhados */
+    flex-direction: column;
 }
 
 header {
@@ -40,7 +39,6 @@ header {
 header .logo {
     height: 60px;
     width: auto;
-    margin-right: 0px;
 }
 
 header h1 {
@@ -60,7 +58,7 @@ header h1 {
 #summary-text {
     margin-bottom: 20px;
     font-size: 20px;
-    font-weight:bold;
+    font-weight: bold;
     color: rgb(233, 232, 232);
     text-align: center;
 }
@@ -68,20 +66,21 @@ header h1 {
 /* Layout para os gráficos com grid */
 .charts {
     display: grid;
-    gap: 30px; /* Espaçamento entre os gráficos */
-    justify-items: center; /* Centraliza os gráficos na célula */
+    gap: 30px;
+    justify-items: center;
     padding: 20px;
+    flex-grow: 1; /* Faz o grid ocupar o espaço restante */
 }
 
 /* Duas colunas para janelas grandes */
 @media (max-width: 650px) {
     .chart-container {
-        height: 4dvb;  /* Reduz a altura dos gráficos em telas pequenas */
+        height: auto; /* Ajusta altura dinamicamente */
         width: 350px;
     }
     .info-box {
         width: 200px;
-        height: 200px;
+        height: auto;
     }
 }
 
@@ -91,52 +90,39 @@ header h1 {
         grid-template-columns: repeat(2, 1fr); /* Duas colunas */
     }
     .chart-container {
-        height: 4dvb;  /* Reduz a altura dos gráficos em telas pequenas */
+        height: auto;
         width: 400px;
     }
 }
 
-/* Duas colunas para janelas grandes */
-@media (min-width: 1200px) {
-    .charts {
-        grid-template-columns: repeat(2, 1fr); /* Duas colunas */
-    }
-    .chart-container {
-        height: 400px;  /* Reduz a altura dos gráficos em telas pequenas */
-        width: 550px;
-    }
-}
-
 /* Uma única coluna para janelas pequenas */
-@media (min-width: 650px) and (max-width: 849px)  {
+@media (min-width: 650px) and (max-width: 849px) {
     .charts {
-        grid-template-columns: 1fr; /* Uma única coluna */
+        grid-template-columns: 1fr;
     }
     .chart-container {
-        height: 250px;  /* Reduz a altura dos gráficos em telas pequenas */
+        height: auto;
         width: 600px;
     }
 }
 
 /* Container dos gráficos */
 .chart-container {
-    max-width: 600px;   /* Limita a largura máxima do gráfico */
-    height: 300px;      /* Altura fixa para manter a proporção */
+    max-width: 600px;
+    height: auto;
 }
 
-/* A largura e altura do gráfico ocupam 100% do container */
+/* Largura e altura do gráfico ocupam 100% do container */
 canvas {
     width: 100%;
     height: 100%;
 }
 
-
-
 #spotify-info {
-    display: flex-start;
+    display: flex;
     justify-content: center;
     align-items: center;
-    height: 35vh;
+    height: auto;
 }
 
 .info-box {
@@ -144,12 +130,12 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    background: linear-gradient(0deg, #434343 1%, rgb(162, 165, 162) 190%);;
+    background: linear-gradient(0deg, #434343 1%, rgb(162, 165, 162) 190%);
     color: #e9e8e8;
     border-radius: 40px;
     padding: 20px;
     width: 350px;
-    height: 250px;
+    height: auto;
     position: relative;
 }
 
@@ -162,28 +148,21 @@ canvas {
 }
 
 .info-text {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     font-size: 16px;
-    font-weight:bold;
+    font-weight: bold;
     margin-top: 15px;
     position: relative;
-    top: 15px; 
     padding-left: 25px;
 }
 
-/* Duas colunas para janelas grandes */
+/* Estilos para telas menores */
 @media (max-width: 650px) {
     .info-box {
         width: 250px;
-        height: 200px;
     }
     .info-text {
         font-size: 14px;
-        font-weight:bold;
-        margin-top: 10px;
-        position: relative;
-        top: 15px; 
-        padding-left: 25px;
     }
     .spotify-logo {
         left: 120px;
