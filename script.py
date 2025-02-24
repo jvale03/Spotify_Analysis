@@ -8,6 +8,7 @@ WRAP_LIST = [
     "https://docs.google.com/spreadsheets/d/12Ca1HddvjQewWyuJGH350czVv3dx8jy3gYP4ajciatI/edit?gid=0#gid=0",
     "https://docs.google.com/spreadsheets/d/1RhnqtHVywLohy2xjt6Cjt1FwXdyjymnqcFAYqvYYFVw/edit?gid=0#gid=0",
     "https://docs.google.com/spreadsheets/d/1df2j2zcQtCY4WdWyNlbDDUp3zdmBcF9ssr9Eokb2_oM/edit?gid=0#gid=0"
+
 ]
 
 
@@ -81,5 +82,7 @@ if __name__ == "__main__":
         "hour_dist": hour_count 
     }
 
+
     with open("/home/vale/Documents/SpotifyWrapped/src/data.json", "w") as f1:
         json.dump(data, f1)
+
