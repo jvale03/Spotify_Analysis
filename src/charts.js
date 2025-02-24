@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     datasets: [{
                         label: "Nr of plays",
                         data: artist_counts,
-                        backgroundColor: artist_counts.map(() => "rgb(30,40,60)"),
+                        backgroundColor: artist_counts.map(() => "rgb(30,40,70)"),
                         borderWidth: 0,
                         borderRadius: 10,  // barras arredondadas
                         borderSkipped: false
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         label: "Nr of plays",
 
                         data: track_counts,
-                        backgroundColor: track_counts.map(() => "rgb(30,40,60)"),
+                        backgroundColor: track_counts.map(() => "rgb(30,40,70)"),
                         borderWidth: 0,
                         borderRadius: 10,
                         borderSkipped: false
@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     datasets: [{
                         label: "listen percentage",
                         data: hours_percentage,
-                        backgroundColor: hours_percentage.map(() => "rgb(30,40,60)"),
+                        backgroundColor: hours_percentage.map(() => "rgb(30,40,70)"),
                         borderWidth: 0,
                         borderRadius: 10,
                         borderSkipped: false
