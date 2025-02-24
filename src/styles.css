@@ -11,7 +11,7 @@
 
 body {
     font-family: 'Metropolis Semi', Arial, sans-serif;
-    background: linear-gradient(0deg, rgb(0, 0, 0) 1%, rgb(20, 20, 20) 190%);
+    background: rgb(15,15,15);
     color: rgb(10, 10, 10);
     margin: 0;
     padding: 0;
@@ -24,7 +24,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(0deg, rgb(10, 10, 10) 1%, rgb(10, 10, 10) 190%);
+    background: rgb(15,15,15);
     padding: 1rem;
     font-size: 1.5rem;
     font-weight: bold;
