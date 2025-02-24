@@ -11,17 +11,20 @@
 
 body {
     font-family: 'Metropolis Semi', Arial, sans-serif;
-    background: linear-gradient(0deg, #282828 1%, rgb(113, 117, 114) 190%);
+    background: linear-gradient(0deg, #000000 1%, rgb(0, 0, 0) 190%);
     color: black;
     margin: 0;
     padding: 0;
+    min-height: 100vh; /* Faz com que o conteúdo preencha a tela */
+    display: flex;
+    flex-direction: column; /* Garante que os elementos no body fiquem empilhados */
 }
 
 header {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(0deg, #303030 1%, rgb(12, 12, 12) 190%);
+    background: linear-gradient(0deg, #000000 1%, rgb(12, 12, 12) 190%);
     padding: 1rem;
     font-size: 1.5rem;
     font-weight: bold;
@@ -42,8 +45,8 @@ header .logo {
 
 header h1 {
     margin: 0;
-    font-size: 1.5rem;
-    color: rgba(30, 215, 96, 0.6);
+    font-size: 2.5rem;
+    color: rgb(131, 140, 241, 0.9);
     text-align: center;
 }
 
@@ -141,7 +144,7 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    background: linear-gradient(0deg, #434343 1%, rgb(162, 165, 162) 190%);;
+    background: linear-gradient(0deg, rgb(30,40,60) 1%, rgb(18, 24, 38) 50%);;
     color: #e9e8e8;
     border-radius: 40px;
     padding: 20px;
