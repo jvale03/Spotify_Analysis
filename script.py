@@ -4,13 +4,13 @@ import json
 from datetime import datetime
 
 WRAP_LIST = [
-    #"https://docs.google.com/spreadsheets/d/1qP6ewOM2nnbo4TBnKRRf5jDEZV_BAsQWucYEZLWeAQ0/edit?usp=sharing",
-    #"https://docs.google.com/spreadsheets/d/12Ca1HddvjQewWyuJGH350czVv3dx8jy3gYP4ajciatI/edit?gid=0#gid=0",
-    #"https://docs.google.com/spreadsheets/d/1RhnqtHVywLohy2xjt6Cjt1FwXdyjymnqcFAYqvYYFVw/edit?gid=0#gid=0",
-    #"https://docs.google.com/spreadsheets/d/1df2j2zcQtCY4WdWyNlbDDUp3zdmBcF9ssr9Eokb2_oM/edit?gid=0#gid=0",
-    "https://docs.google.com/spreadsheets/d/1AvKJ8qDAUseC25zO6ZK69FYBpSoBRDqLUMS9ECPabZE/edit?usp=sharing",
-    "https://docs.google.com/spreadsheets/d/1CaHmri5SHTrvn0QM_P5ftv01Br-Vi4_66bQT-6i30q4/edit?gid=0#gid=0",
-    "https://docs.google.com/spreadsheets/d/1AD5sDIp6iCvv-IYuMXSzrecqabDL-Mjq_waPwvq5nLI/edit?gid=0#gid=0",
+    # "https://docs.google.com/spreadsheets/d/1qP6ewOM2nnbo4TBnKRRf5jDEZV_BAsQWucYEZLWeAQ0/edit?usp=sharing",
+    # "https://docs.google.com/spreadsheets/d/12Ca1HddvjQewWyuJGH350czVv3dx8jy3gYP4ajciatI/edit?gid=0#gid=0",
+    # "https://docs.google.com/spreadsheets/d/1RhnqtHVywLohy2xjt6Cjt1FwXdyjymnqcFAYqvYYFVw/edit?gid=0#gid=0",
+    # "https://docs.google.com/spreadsheets/d/1df2j2zcQtCY4WdWyNlbDDUp3zdmBcF9ssr9Eokb2_oM/edit?gid=0#gid=0",
+    # "https://docs.google.com/spreadsheets/d/1AvKJ8qDAUseC25zO6ZK69FYBpSoBRDqLUMS9ECPabZE/edit?usp=sharing",
+    # "https://docs.google.com/spreadsheets/d/1CaHmri5SHTrvn0QM_P5ftv01Br-Vi4_66bQT-6i30q4/edit?gid=0#gid=0",
+    # "https://docs.google.com/spreadsheets/d/1AD5sDIp6iCvv-IYuMXSzrecqabDL-Mjq_waPwvq5nLI/edit?gid=0#gid=0",
     "https://docs.google.com/spreadsheets/d/1h7qhoX4CdCjx22-WIu0oTh0kAZhnVwD3u8mRQyoZTsc/edit?gid=0#gid=0"
 ]
 
@@ -30,7 +30,7 @@ def convert_google_sheet_url(url):
 
 
 if __name__ == "__main__":
-    concat_df = pd.read_csv("/home/vale/Documents/SpotifyWrapped/src/ConcatDF.csv")
+    concat_df = pd.read_csv("/home/vale/Documents/SpotifyWrapped/src/dataframes/ConcatDF.csv")
     # utr converter
     df_list = [concat_df]
     for wrap in WRAP_LIST:
