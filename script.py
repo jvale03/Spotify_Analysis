@@ -4,11 +4,14 @@ import json
 from datetime import datetime
 
 WRAP_LIST = [
-    "https://docs.google.com/spreadsheets/d/1qP6ewOM2nnbo4TBnKRRf5jDEZV_BAsQWucYEZLWeAQ0/edit?usp=sharing",
-    "https://docs.google.com/spreadsheets/d/12Ca1HddvjQewWyuJGH350czVv3dx8jy3gYP4ajciatI/edit?gid=0#gid=0",
-    "https://docs.google.com/spreadsheets/d/1RhnqtHVywLohy2xjt6Cjt1FwXdyjymnqcFAYqvYYFVw/edit?gid=0#gid=0",
-    "https://docs.google.com/spreadsheets/d/1df2j2zcQtCY4WdWyNlbDDUp3zdmBcF9ssr9Eokb2_oM/edit?gid=0#gid=0"
-
+    #"https://docs.google.com/spreadsheets/d/1qP6ewOM2nnbo4TBnKRRf5jDEZV_BAsQWucYEZLWeAQ0/edit?usp=sharing",
+    #"https://docs.google.com/spreadsheets/d/12Ca1HddvjQewWyuJGH350czVv3dx8jy3gYP4ajciatI/edit?gid=0#gid=0",
+    #"https://docs.google.com/spreadsheets/d/1RhnqtHVywLohy2xjt6Cjt1FwXdyjymnqcFAYqvYYFVw/edit?gid=0#gid=0",
+    #"https://docs.google.com/spreadsheets/d/1df2j2zcQtCY4WdWyNlbDDUp3zdmBcF9ssr9Eokb2_oM/edit?gid=0#gid=0",
+    "https://docs.google.com/spreadsheets/d/1AvKJ8qDAUseC25zO6ZK69FYBpSoBRDqLUMS9ECPabZE/edit?usp=sharing",
+    "https://docs.google.com/spreadsheets/d/1CaHmri5SHTrvn0QM_P5ftv01Br-Vi4_66bQT-6i30q4/edit?gid=0#gid=0",
+    "https://docs.google.com/spreadsheets/d/1AD5sDIp6iCvv-IYuMXSzrecqabDL-Mjq_waPwvq5nLI/edit?gid=0#gid=0",
+    "https://docs.google.com/spreadsheets/d/1h7qhoX4CdCjx22-WIu0oTh0kAZhnVwD3u8mRQyoZTsc/edit?gid=0#gid=0"
 ]
 
 
@@ -27,8 +30,9 @@ def convert_google_sheet_url(url):
 
 
 if __name__ == "__main__":
+    concat_df = pd.read_csv("/home/vale/Documents/SpotifyWrapped/src/ConcatDF.csv")
     # utr converter
-    df_list = []
+    df_list = [concat_df]
     for wrap in WRAP_LIST:
         pandas_url = convert_google_sheet_url(wrap)
         # read csv
@@ -36,6 +40,8 @@ if __name__ == "__main__":
         df_list.append(df)
     
     df = pd.concat(df_list, axis=0, ignore_index=True)
+
+    #df.to_csv("src/ConcatDF.csv",index=False)
     
     # Adaptar para o formato correto: "Month Day, Year at Hour:MinuteAM/PM"
     df['PlayedAt'] = df['PlayedAt'].str.replace(r' at ', ' ', regex=True)  # Remover ' at '
@@ -74,7 +80,7 @@ if __name__ == "__main__":
         "top_artists": top_10_artist.to_dict(),
         "top_tracks": top_10_tracks.to_dict(),
         "total_tracks": df.shape[0],
-        "total_minutes": df.shape[0] * 3,
+        "total_minutes": round(df.shape[0] * 3.001,0),
         "total_artists": len(artist_count),
         "total_different_tracks": len(track_count),
         "top_month": month_count.head(1).to_dict(),
@@ -85,4 +91,5 @@ if __name__ == "__main__":
 
     with open("/home/vale/Documents/SpotifyWrapped/src/data.json", "w") as f1:
         json.dump(data, f1)
+
 

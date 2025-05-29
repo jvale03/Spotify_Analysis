@@ -23,8 +23,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         const artists = Object.keys(data.top_artists);
         const artist_counts = Object.values(data.top_artists);
         const tracks = Object.keys(data.top_tracks);
-
         const track_counts = Object.values(data.top_tracks);
+
+        // Sort tracks and counts together based on counts
+        const sorted = track_counts
+            .map((count, index) => ({ count, track: tracks[index] }))
+            .sort((a, b) => b.count - a.count);
+        
+        const sorted_tracks = sorted.map(item => item.track);
+        const sorted_track_counts = sorted.map(item => item.count);
+
         const hours = Object.keys(data.hour_dist);
         const hours_percentage = Object.values(data.hour_dist);
 
@@ -139,12 +147,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             new Chart(track_chart_element, {
                 type: "bar",
                 data: {
-                    labels: tracks,
+                    labels: sorted_tracks,
                     datasets: [{
                         label: "Nr of plays",
-
-                        data: track_counts,
-                        backgroundColor: track_counts.map(() => "rgb(30,40,70)"),
+                        data: sorted_track_counts,
+                        backgroundColor: sorted_track_counts.map(() => "rgb(30,40,70)"),
                         borderWidth: 0,
                         borderRadius: 10,
                         borderSkipped: false
@@ -160,7 +167,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 color: text_color,
                                 font: { size: 12 },
                                 callback: (value, index) => {
-                                    var label = tracks[index];
+                                    var label = sorted_tracks[index];
                                     return label.length > 8 ? label.substring(0, 8) + "..." : label;
                                 }
                             },
